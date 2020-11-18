@@ -38,5 +38,13 @@ namespace BolilleroCaro
             return cantGanados;
 
         }
+        public int simularSinHilos(int bolillero, List<int> jugadas, int CantSimulación, int cantVeces)
+        {
+            return JugarNVeces(jugadas, cantVeces);
+        }
+        public int simularConHilos(int bolillero, int jugada, int CanStimulación, int canHilos)
+        {
+            
+        }
     }
 }
