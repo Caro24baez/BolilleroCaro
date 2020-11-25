@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BolilleroCaro
 {
@@ -22,7 +24,7 @@ namespace BolilleroCaro
             return true;
         }
 
-        public int JugarNVeces(List<int> jugadas, int cantVeces)
+        public int JugarNVeces(List<int> jugadas, int cantVeces, Bolillero bolillero)
         {
             int cantGanados = 0;
             for (int i = 0; i < cantVeces; i++)
@@ -38,12 +40,23 @@ namespace BolilleroCaro
             return cantGanados;
 
         }
-        public int simularSinHilos(int bolillero, List<int> jugadas, int CantSimulación, int cantVeces)
+        public int simularSinHilos(Bolillero bolillero, List<int> jugadas, int CantSimulación, int cantVeces)
         {
-            return JugarNVeces(jugadas, cantVeces);
+            return JugarNVeces(jugadas, cantVeces, bolillero);
         }
-        public int simularConHilos(int bolillero, int jugada, int CanStimulación, int canHilos)
+        public int simularConHilos(Bolillero bolillero, List<int> jugadas, int CanStimulación, int canHilos, int cantVeces)
         {
+            var vectorTarea = new Task<int>[canHilos];
+            int resto = cantVeces % canHilos;
+            for (int i = 0; i < canHilos; i++)
+            {
+                Bolillero clon = (Bolillero)bolillero.Clone();
+                vectorTarea[i] = Task.Run(() => JugarNVeces(jugadas, cantVeces / canHilos, clon));
+            }
+            Task.WaitAll(vectorTarea);
+            Bolillero clon1 = (Bolillero)bolillero.Clone();
+            vectorTarea[0] = Task.Run(() => JugarNVeces(jugadas, cantVeces / canHilos + resto , clon1));
+            return vectorTarea.Sum(T => T.Result);
             
         }
     }
