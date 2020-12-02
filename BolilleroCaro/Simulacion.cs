@@ -59,5 +59,10 @@ namespace BolilleroCaro
             return vectorTarea.Sum(T => T.Result);
             
         }
+        public async Task<string> SimularConHilosAsync(Bolillero bolillero)
+        {
+            await Task.Delay(BolilleroCaro);
+            return 
+        }
     }
 }
