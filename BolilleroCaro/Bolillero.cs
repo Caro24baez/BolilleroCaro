@@ -13,6 +13,8 @@ namespace BolilleroCaro
         public List<int> bolillasAfuera{ get; set; }
 
         public int cantBolillas { get; set; }
+        
+        public int llenarBolillero {get; set;}
 
         Random numRand;
         public Bolillero(int inico, int fin)
@@ -27,6 +29,7 @@ namespace BolilleroCaro
         }
         private Bolillero(Bolillero original)
         {
+            new Random(DateTime.Now.Millisecond);
             bolillasAdentro = new List<int>(original.bolillasAdentro);
             bolillasAfuera = new List<int>(original.bolillasAfuera);
 
