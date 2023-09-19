@@ -44,7 +44,7 @@ namespace BolilleroCaro
         {
             return JugarNVeces(jugadas, cantVeces, bolillero);
         }
-        public int simularConHilos(Bolillero bolillero, List<int> jugadas, int CanStimulación, int canHilos, int cantVeces)
+        public int simularConHilos(Bolillero bolillero, List<int> jugadas, int CanSimulación, int canHilos, int cantVeces)
         {
             var vectorTarea = new Task<int>[canHilos];
             int resto = cantVeces % canHilos;
@@ -55,7 +55,7 @@ namespace BolilleroCaro
             }
             Task.WaitAll(vectorTarea);
             Bolillero clon1 = (Bolillero)bolillero.Clone();
-            vectorTarea[0] = Task.Run(() => JugarNVeces(jugadas, cantVeces / canHilos + resto , clon1));
+            vectorTarea[canHilos - 1] = Task.Run(() => JugarNVeces(jugadas, cantVeces / canHilos + resto , clon1));
             return vectorTarea.Sum(T => T.Result);
             
         }
