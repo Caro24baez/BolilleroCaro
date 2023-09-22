@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,15 +13,14 @@ namespace BolilleroCaro
         public List<int> bolillasAfuera{ get; set; }
 
         public int cantBolillas { get; set; }
-        
-        public int llenarBolillero {get; set;}
 
         Random numRand;
-        public Bolillero(int inico, int fin)
+        public Bolillero(int cantBolillas)
         {
-            new Random(DateTime.Now.Millisecond);
+            this.cantBolillas = cantBolillas;
             bolillasAdentro = new List<int>();
             bolillasAfuera = new List<int>();
+            numRand = new Random(DateTime.Now.Millisecond);
         }
 
         public Bolillero()
@@ -29,12 +28,12 @@ namespace BolilleroCaro
         }
         private Bolillero(Bolillero original)
         {
-            new Random(DateTime.Now.Millisecond);
+            
             bolillasAdentro = new List<int>(original.bolillasAdentro);
             bolillasAfuera = new List<int>(original.bolillasAfuera);
-
+            numRand = new Random(DateTime.Now.Millisecond);
         }
-        public void llenarBolillero(int inicio, int fin)
+        public void llenarBolillero()
         {
             for (int i = 0; i < cantBolillas; i++)
             {
