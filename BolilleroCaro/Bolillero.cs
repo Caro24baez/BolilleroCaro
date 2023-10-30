@@ -1,41 +1,47 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using System.Text;
-
+using System.Security.Cryptography;
 
 namespace BolilleroCaro
 {
     public class Bolillero : ICloneable
     {
-        public List<int> bolillasAdentro { get; set; }
+        public List<int> bolillasAdentro { get; private set; }
+        public List<int> bolillasAfuera { get; private set; }
+        public int cantBolillas { get; private set; }
+        public int lengJugadas { get; private set; }
+        private readonly IRandomNumberGenerator azar;
 
-        public List<int> bolillasAfuera{ get; set; }
-
-        public int cantBolillas { get; set; }
-
-        Random numRand;
-        public Bolillero(int cantBolillas)
+        public Bolillero(int cantBolilla, IRandomNumberGenerator azar, int lengJugada)
         {
-            this.cantBolillas = cantBolillas;
+            this.azar = azar;
+            cantBolillas = cantBolilla;
+            lengJugadas = lengJugada;
             bolillasAdentro = new List<int>();
             bolillasAfuera = new List<int>();
-            numRand = new Random(DateTime.Now.Millisecond);
+            llenarBolillero(cantBolilla);
         }
 
         public Bolillero()
-        {
-        }
+         {
+             bolillasAdentro = new List<int>();
+             bolillasAfuera = new List<int>();
+             this.azar = azar;
+         }
+
         private Bolillero(Bolillero original)
         {
-            
             bolillasAdentro = new List<int>(original.bolillasAdentro);
             bolillasAfuera = new List<int>(original.bolillasAfuera);
-            numRand = new Random(DateTime.Now.Millisecond);
+            this.azar = original.azar;
         }
-        public void llenarBolillero()
+        private void llenarBolillero(int cantBolilla)
         {
-            for (int i = 0; i < cantBolillas; i++)
+            Console.WriteLine("Llenando bolillero con " + cantBolilla + " bolillas...");
+            for (int i = 0; i < cantBolilla; i++)
             {
                 bolillasAdentro.Add(i);
             }
@@ -47,20 +53,50 @@ namespace BolilleroCaro
             bolillasAfuera.Clear();
         }
 
+        public bool verificarJugada(List<int> jugada, List<int> jugada2) => jugada.SequenceEqual(jugada2);
+
+        public bool sacarJugada(List<int> jugada)
+        {
+            for (int i = 0; i < jugada.Count; i++)
+            {
+                var bolilla = sacarBolilla();
+                Console.WriteLine("Bolilla sacada " + bolilla);
+                // Console.WriteLine($"Bolilla esperada: {jugada[i]}");
+                if (bolilla == jugada[i])
+                {
+                    return true;
+                }
+                if (bolilla != jugada[i])
+                {
+                    return false; //La manera que la jugada sea exitosa, en nuestro caso, tiene que salir el 1 y el 8 en ese orden. (1 - 8).
+                }
+                    
+            }
+            return true;
+        }
 
         public int sacarBolilla()
         {
-            int bolilla = bolillasAdentro[numRand.Next(bolillasAdentro.Count)];
-            bolillasAfuera.Add(bolilla);
-            bolillasAdentro.Remove(bolilla);
-            return bolilla;
+            if (bolillasAdentro != null && bolillasAdentro.Count > 0)
+            {
+                int bolillaIndex = azar.Next(0, bolillasAdentro.Count);
+                int bolilla = bolillasAdentro[bolillaIndex];
+                bolillasAfuera.Add(bolilla);
+                bolillasAdentro.RemoveAt(bolillaIndex);
+                return bolilla;
+            }
+            else
+            {
+                Console.WriteLine("No hay bolillas adentro en el bolillero.");
+                return -1;
+            }
         }
-
 
         public object Clone()
         {
-            return new Bolillero(this);
+            Bolillero bolilleroClone = new Bolillero(this);
+            return bolilleroClone;
         }
     }
-}
+} 
 
