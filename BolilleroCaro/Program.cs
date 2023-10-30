@@ -42,10 +42,13 @@ namespace BolilleroProgram
             Console.WriteLine("Cantidad de veces que la jugada salió (con hilos): " + resultadoConHilos);
             
             bool resultado = simulacion.Jugar(jugada);
-            Console.WriteLine("¿La jugada fue exitosa?: " + resultado);
+            Console.WriteLine("¿La jugada fue exitosa?: " + resultado);      
+            if (resultado == false)
+            {
+                Console.WriteLine("Lo siento. Para poder ganar, la jugada tendría que salir en el orden correspondiente. Suerte a la próxima!");
+            }
             
             Console.ReadLine();
-           // return Task.CompletedTask;
         }
     }
 }
