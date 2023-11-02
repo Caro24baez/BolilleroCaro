@@ -36,8 +36,8 @@ var jugada = new List<int> { 1, 8 };            Console.WriteLine($"Jugada: {str
             // Simular con hilos
             Console.Write("Ingrese la cantidad de hilos: ");
             int cantHilos = Convert.ToInt32(Console.ReadLine());
-            int resultadoConHilos = simulacion.SimularConHilos(bolillero, jugada, jugarNVeces, cantHilos);
-            Console.WriteLine("Cantidad de veces que la jugada salió (con hilos): " + resultadoConHilos);
+            int resultadoConHilos = await simulacion.SimularConHilosAsync(bolillero, jugada, jugarNVeces, cantHilos);
+Console.WriteLine("Cantidad de veces que la jugada salió (con hilos): " + resultadoConHilos);
             
             bool resultado = simulacion.Jugar(jugada);
             Console.WriteLine("¿La jugada fue exitosa?: " + resultado);      
