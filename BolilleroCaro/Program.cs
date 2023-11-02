@@ -26,10 +26,8 @@ namespace BolilleroProgram
             int jugarNVeces = Convert.ToInt32(Console.ReadLine());
 
             
-            var jugada = new List<int>();
-            jugada.Add(1);
-            jugada.Add(8);
-            Console.WriteLine($"Jugada: {string.Join(", ", jugada)}"); 
+            
+var jugada = new List<int> { 1, 8 };            Console.WriteLine($"Jugada: {string.Join(", ", jugada)}"); 
 
             // Simular sin hilos
             long SinHilos = simulacion.SimularSinHilos(bolillero, jugada, jugarNVeces);
