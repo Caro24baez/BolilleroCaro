@@ -25,9 +25,11 @@ namespace BolilleroProgram
             Console.Write("Ingrese la cantidad de veces a jugar: ");
             int jugarNVeces = Convert.ToInt32(Console.ReadLine());
 
-            
-            
-var jugada = new List<int> { 1, 8 };            Console.WriteLine($"Jugada: {string.Join(", ", jugada)}"); 
+
+            var jugada = new List<int>();
+            jugada.Add(1);
+            jugada.Add(3);
+            Console.WriteLine($"Jugada: {string.Join(", ", jugada)}");
 
             // Simular sin hilos
             long SinHilos = simulacion.SimularSinHilos(bolillero, jugada, jugarNVeces);
@@ -36,15 +38,11 @@ var jugada = new List<int> { 1, 8 };            Console.WriteLine($"Jugada: {str
             // Simular con hilos
             Console.Write("Ingrese la cantidad de hilos: ");
             int cantHilos = Convert.ToInt32(Console.ReadLine());
-            int resultadoConHilos = await simulacion.SimularConHilosAsync(bolillero, jugada, jugarNVeces, cantHilos);
-Console.WriteLine("Cantidad de veces que la jugada salió (con hilos): " + resultadoConHilos);
-            
+            int resultadoConHilos = (int)await simulacion.SimularConHilosAsync(bolillero, jugada, jugarNVeces, cantHilos);
+            Console.WriteLine("Cantidad de veces que la jugada salió (con hilos): " + resultadoConHilos);
+
             bool resultado = simulacion.Jugar(jugada);
-            Console.WriteLine("¿La jugada fue exitosa?: " + resultado);      
-            if (resultado == false)
-            {
-                Console.WriteLine("Lo siento. Para poder ganar, la jugada tendría que salir en el orden correspondiente. Suerte a la próxima!");
-            }
+            Console.WriteLine("¿La jugada fue exitosa?: " + resultado);
             
             Console.ReadLine();
         }
