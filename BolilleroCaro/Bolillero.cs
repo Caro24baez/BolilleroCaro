@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography;
 
@@ -30,7 +26,7 @@ namespace BolilleroCaro
              bolillasAdentro = new List<int>();
              bolillasAfuera = new List<int>();
              this.azar = azar;
-         }
+        }
 
         private Bolillero(Bolillero original)
         {
@@ -61,14 +57,13 @@ namespace BolilleroCaro
             {
                 var bolilla = sacarBolilla();
                 Console.WriteLine("Bolilla sacada " + bolilla);
-                // Console.WriteLine($"Bolilla esperada: {jugada[i]}");
                 if (bolilla == jugada[i])
                 {
                     return true;
                 }
                 if (bolilla != jugada[i])
                 {
-                    return false; //La manera que la jugada sea exitosa, en nuestro caso, tiene que salir el 1 y el 8 en ese orden. (1 - 8).
+                    return false;
                 }
                     
             }
@@ -99,4 +94,3 @@ namespace BolilleroCaro
         }
     }
 } 
-
